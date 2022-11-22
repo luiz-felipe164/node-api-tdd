@@ -118,13 +118,11 @@ describe('SignUp Controller', () => {
   })
 
   test('should returns serverError if an error in emailValidator', () => {
-    class EmailValidatorStub implements EmailValidator {
-      isValid (email: string): boolean {
-        throw new Error()
-      }
-    }
-    const emailValidatorStub = new EmailValidatorStub()
-    const sut = new SignUpController(emailValidatorStub)
+    const { sut, emailValidatorStub } = makeSut()
+    jest.spyOn(emailValidatorStub, 'isValid').mockImplementationOnce(() => {
+      throw new Error()
+    })
+
     const httpRequest = {
       body: {
         name: 'teste_name',
