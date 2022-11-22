@@ -84,6 +84,22 @@ describe('SignUp Controller', () => {
     expect(httpResponse.body).toEqual(new MissingParamError('passwordConfirmation'))
   })
 
+  test('should return 400 if no passwordConfirmation is different of password', () => {
+    const { sut } = makeSut()
+    const httpRequest = {
+      body: {
+        name: 'teste_name',
+        email: 'any_email@any.com',
+        password: 'any_pass',
+        passwordConfirmation: 'invalid_pass'
+      }
+    }
+
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toEqual(new InvalidParamError('passwordConfirmation'))
+  })
+
   test('should return 400 an invalid email is provided', () => {
     const { sut, emailValidatorStub } = makeSut()
     jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
@@ -92,7 +108,7 @@ describe('SignUp Controller', () => {
         name: 'teste_name',
         email: 'invalid_email@any.com',
         password: 'any_pass',
-        passwordConfirmation: '3y7xJ$J#'
+        passwordConfirmation: 'any_pass'
       }
     }
 
@@ -109,7 +125,7 @@ describe('SignUp Controller', () => {
         name: 'teste_name',
         email: 'any_email@any.com',
         password: 'any_pass',
-        passwordConfirmation: '3y7xJ$J#'
+        passwordConfirmation: 'any_pass'
       }
     }
 
@@ -128,7 +144,7 @@ describe('SignUp Controller', () => {
         name: 'teste_name',
         email: 'any_email@any.com',
         password: 'any_pass',
-        passwordConfirmation: '3y7xJ$J#'
+        passwordConfirmation: 'any_pass'
       }
     }
 
