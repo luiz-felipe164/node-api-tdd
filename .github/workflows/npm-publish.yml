@@ -7,14 +7,14 @@ on:
   push:
     branches:
       - '*'
-env:
-  SLACK_OMS_DE: ${{ secrets.SLACK_OMS_DEPLOYS }}
 
 jobs:
   build:
   
     runs-on: ubuntu-latest
+    env:
+      SLACK_OMS_DEPLOYS: ${{ secrets.SLACK_OMS_DEPLOYS }}
       
     steps:
       - uses: actions/checkout@v3
-      - run: printenv
+      - run: echo "O valor da variável de ambiente SLACK_OMS_DEPLOYS é $SLACK_OMS_DEPLOYS"
