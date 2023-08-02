@@ -7,13 +7,13 @@ on:
   push:
     branches:
       - '*'
+env:
+  SLACK_OMS_DE: ${{ secrets.SLACK_OMS_DEPLOYS }}
 
 jobs:
   build:
   
     runs-on: ubuntu-latest
-    env: 
-      SLACK_OMS_DE: ${{ secrets.SLACK_OMS_DEPLOYS }}
       
     steps:
       - uses: actions/checkout@v3
